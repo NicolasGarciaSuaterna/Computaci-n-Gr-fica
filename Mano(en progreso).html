@@ -14,7 +14,7 @@
         </style>
     </head>
     <body>
-        <div id="info">RELACIÓN PARENT-CHILD<br/>
+        <div id="info">RELACIÃ“N PARENT-CHILD<br/>
             Usar flecha arriba y abajo para trasladar.<br/>
             Usar flechas laterales para rotar.<br/>
         </div>
@@ -22,9 +22,23 @@
     <script>
 		var scene, aspect, camera, renderer;
 		var geometry1, geometry2,geometry3,geometry4,geometry5;
-		var hips, torso, head;
+		var hips, torso, head, headaux;
 		var rightFoot, rightLeg, rightArm, rightHand;
 		var leftFoot, leftLeg, dedo2,dedo3,dedo4,dedo5, leftArm, leftHand;
+
+var leftleg2, dedo22,dedo32,dedo42;
+var leftleg3, dedo23,dedo33,dedo43;
+var leftleginter1, leftleginter2, leftleginter3;
+var dedo1inter1, dedo1inter2, dedo1inter3;
+var dedo2inter1, dedo2inter2, dedo2inter3;
+var dedo3inter1, dedo3inter2, dedo3inter3;
+var dedo52, dedo5inter1,dedo5inter2;
+
+var d1a1= false;
+var d1a2= false;
+var d1a3= false;
+
+
 		var startTime = Date.now();
 				
 		var upArrow = false;
@@ -58,7 +72,7 @@
 					case 38: // TRASLADAR ADELANTE
 						upArrow = true;
 						break;
-					case 40: // TRASLADAR ATRÁS
+					case 40: // TRASLADAR ATRÃS
 						downArrow = true;
 						break;
 					case 83: // ESCALA AGRANDAR
@@ -73,6 +87,8 @@
 					case 39: // ROTAR CCW
 						rightArrow = true;
 						break;
+
+/*
 					case 88: // SELECCIONAR EJE X DE ROTACION
 						yAxis = false;
 						zAxis = false;
@@ -84,10 +100,27 @@
 						yAxis = true;
 						break;
 					case 90: // SELECCIONAR EJE Z DE 
-						xAxis = false;
+
+xAxis = false;
 						yAxis = false;
 						zAxis = true;
+
+			
 						break;
+*/
+
+
+
+///////////////Articulaciones dedo 1:
+/*case 90: 
+			         		if(d1a1==true){d1a1=false;}
+                           if(d1a1==false){d1a1=true;}       
+
+						break;*/
+
+
+
+
 				}
 			};	  
 		  			
@@ -128,6 +161,7 @@
 		  	var z = new THREE.Vector3( 0, 0, 1 );
 			var color1 = new THREE.Color( 0xFFFFFF );
 		  	var color2 = new THREE.Color( 0x333333 );
+                var color3 = new THREE.Color( 0x0801d5 );
 		  	var colorR = new THREE.Color( 0xAA0000 );
 		  	var colorG = new THREE.Color( 0x00AA00 );
 		  	var colorB = new THREE.Color( 0x0000AA );
@@ -153,7 +187,7 @@
             var arrowY = new THREE.ArrowHelper( y, origin, arrowSize, colorG );
             var arrowZ = new THREE.ArrowHelper( z, origin, arrowSize, colorB );
 			
-			//CREAR LAS GEOMETRÍAS
+			//CREAR LAS GEOMETRÃAS
 			geometry1 = new THREE.BoxGeometry( 3, 2.5, 1 );
 			for ( var i = 0; i < geometry1.faces.length; i ++ ) {
 				switch(i){
@@ -173,43 +207,345 @@
 			}
 			
 			geometry3 = new THREE.CylinderGeometry( .5, .5, 1, 32 );
-			for ( var i = 0; i < geometry2.faces.length; i++) { 
+			for ( var i = 0; i < geometry3.faces.length; i++) { 
 				if( geometry3.faces[i].normal.y != 0) { 
 					geometry3.faces[i].color = colorGd; 
 				} 
 			}
 			
+	geometry4 = new THREE.CylinderGeometry( .5, .5, 1, 32 );
+			for ( var i = 0; i < geometry4.faces.length; i++) { 
+				if( geometry4.faces[i].normal.y != 0) { 
+					geometry4.faces[i].color = colorGd; 
+				} 
+			}
+
+	geometry5 = new THREE.CylinderGeometry( .5, .5, 1, 32 );
+			for ( var i = 0; i < geometry5.faces.length; i++) { 
+				if( geometry5.faces[i].normal.y != 0) { 
+					geometry5.faces[i].color = colorGd; 
+				} 
+			}
+
+////////// Articulaciones del dedo
+
+geometrydedos = new THREE.SphereGeometry( .5, .5,10);
+			for ( var i = 0; i < geometrydedos.faces.length; i++) { 
+				if( geometrydedos.faces[i].normal.y != 0) { 
+					geometrydedos.faces[i].color = colorGd; 
+				} 
+			}
+
+
+
+
+//////////////////////
+
 			//CREAR LOS MATERIALES
 			var material = new THREE.MeshBasicMaterial( { color: color1, vertexColors: THREE.FaceColors } );
+
+		var material2 = new THREE.MeshBasicMaterial( { color: color3 } );
 			
+
 			//CREAR LOS OBJETOS
-			hips = new THREE.Mesh( geometry1, material );	//CUBO
+			hips = new THREE.Mesh( geometry1, material );
+                head= new THREE.Mesh( geometry1, material );
+
+	//CUBO
 			leftFoot = hips.clone();
 			
-			leftLeg = new THREE.Mesh( geometry2, material ); //CILINDRO
-			dedo2 = new THREE.Mesh( geometry3, material ); //CILINDRO
+			
+
+//CILINDRO
+leftLeg = new THREE.Mesh( geometry2, material );
+dedo2 = new THREE.Mesh( geometry3, material ); 
+dedo3 = new THREE.Mesh( geometry4, material ); 
+dedo4 = new THREE.Mesh( geometry5, material ); 
+
+
+leftLeg2 = new THREE.Mesh( geometry2, material );
+dedo22 = new THREE.Mesh( geometry3, material ); 
+dedo32 = new THREE.Mesh( geometry4, material ); 
+dedo42 = new THREE.Mesh( geometry5, material ); 
+
+leftLeg3 = new THREE.Mesh( geometry2, material );
+dedo23 = new THREE.Mesh( geometry2, material ); 
+dedo33 = new THREE.Mesh( geometry2, material ); 
+dedo43 = new THREE.Mesh( geometry2, material ); 
+
+
+
+
+
+// Inter
+leftleginter1= new THREE.Mesh( geometrydedos, material2 ); 
+dedo1inter1= new THREE.Mesh( geometrydedos, material2 ); 
+dedo2inter1= new THREE.Mesh( geometrydedos, material2 ); 
+dedo3inter1= new THREE.Mesh( geometrydedos, material2 ); 
+
+
+leftleginter2= new THREE.Mesh( geometrydedos, material2 ); 
+dedo1inter2= new THREE.Mesh( geometrydedos, material2 ); 
+dedo2inter2= new THREE.Mesh( geometrydedos, material2 ); 
+dedo3inter2= new THREE.Mesh( geometrydedos, material2 ); 
+
+
+leftleginter3= new THREE.Mesh( geometrydedos, material2 ); 
+dedo1inter3= new THREE.Mesh( geometrydedos, material2 ); 
+dedo2inter3= new THREE.Mesh( geometrydedos, material2 ); 
+dedo3inter3= new THREE.Mesh( geometrydedos, material2 ); 
+
+
+
+//// Pulgar
+
+
+dedo52 = new THREE.Mesh( geometry2, material ); 
+dedo5 = new THREE.Mesh( geometry2, material ); 
+
+dedo5inter1= new THREE.Mesh( geometrydedos, material2 ); 
+dedo5inter2= new THREE.Mesh( geometrydedos, material2 ); 
+
+
+
+/////////////// Mover los objetos
+
+/// Pulgar
+
+dedo52.applyMatrix( new THREE.Matrix4().makeScale(.5,.7,.5) );
+			dedo52.applyMatrix( new THREE.Matrix4().makeTranslation(-2.5,0.6,0));
+
+
+
+
+
+var css2 = Math.cos(45);
+		var sss2 = Math.sin(45);
+var rrr2 = new THREE.Matrix4();
+
+
+rrr2.set( 	                css2,  -sss2,  0, 0,
+				      sss2, css2,0, 0, 
+				        0, 0, 1, 0,
+					0,  0,  0, 1 );	
+
+
+	dedo5.applyMatrix(rrr2);
+
+
+
+
+dedo5.applyMatrix( new THREE.Matrix4().makeScale(.5,.7,.5) );
+			dedo5.applyMatrix( new THREE.Matrix4().makeTranslation(-2.2,-0.3,0) );
+
+
+
+
+//Pulgar inter
+
+
+var css = Math.cos(-45);
+		var sss = Math.sin(-45);
+var rrr = new THREE.Matrix4();
+
+
+rrr.set( 	                css,  -sss,  0, 0,
+				      sss, css,0, 0, 
+				        0, 0, 1, 0,
+					0,  0,  0, 1 );	
+
+
+	dedo5inter1.applyMatrix(rrr);
+		
+dedo5inter1.applyMatrix( new THREE.Matrix4().makeScale(.5,.7,.5) );
+			dedo5inter1.applyMatrix( new THREE.Matrix4().makeTranslation(-1.8,-0.5,0) );
+
+		
+
+
+
+
+dedo5inter2.applyMatrix( new THREE.Matrix4().makeScale(.5,.7,.5) );
+			dedo5inter2.applyMatrix( new THREE.Matrix4().makeTranslation(-2.5,0.1,0) );
+
+
+
+
+
+//CILINDRO dedos 1
 			
 			
-			leftLeg.applyMatrix( new THREE.Matrix4().makeScale(.5,2,.5) );
-			leftLeg.applyMatrix( new THREE.Matrix4().makeTranslation(0,1.5,1) );
-			dedo2.applyMatrix( new THREE.Matrix4().makeScale(.5,2,.5) );
-			dedo2.applyMatrix( new THREE.Matrix4().makeTranslation(0,1.5,-1) );
+			leftLeg.applyMatrix( new THREE.Matrix4().makeScale(.5,.7,.5) );
+			leftLeg.applyMatrix( new THREE.Matrix4().makeTranslation(1.1,1.9,0) );
+
+			dedo2.applyMatrix( new THREE.Matrix4().makeScale(.5,.9,.5) );
+			dedo2.applyMatrix( new THREE.Matrix4().makeTranslation(0.4,2.0,0) );
+
+dedo3.applyMatrix( new THREE.Matrix4().makeScale(.5,.9,.5) );
+			dedo3.applyMatrix( new THREE.Matrix4().makeTranslation(-0.3,2.2,0) );
+
+dedo4.applyMatrix( new THREE.Matrix4().makeScale(.5,.9,.5) );
+			dedo4.applyMatrix( new THREE.Matrix4().makeTranslation(-1.1,2.0,0) );
+
+
+// dedos 2
+
+			leftLeg2.applyMatrix( new THREE.Matrix4().makeScale(.5,.7,.5) );
+			leftLeg2.applyMatrix( new THREE.Matrix4().makeTranslation(1.1,2.7,0) );
+
+			dedo22.applyMatrix( new THREE.Matrix4().makeScale(.5,.9,.5) );
+			dedo22.applyMatrix( new THREE.Matrix4().makeTranslation(0.4,3.0,0) );
+
+dedo32.applyMatrix( new THREE.Matrix4().makeScale(.5,.9,.5) );
+			dedo32.applyMatrix( new THREE.Matrix4().makeTranslation(-0.3,3.2,0) );
+
+dedo42.applyMatrix( new THREE.Matrix4().makeScale(.5,.9,.5) );
+			dedo42.applyMatrix( new THREE.Matrix4().makeTranslation(-1.1,3.0,0) );
+
+
+// dedos 3
+
+			leftLeg3.applyMatrix( new THREE.Matrix4().makeScale(.5,.7,.5) );
+			leftLeg3.applyMatrix( new THREE.Matrix4().makeTranslation(1.1,3.5,0) );
+
+			dedo23.applyMatrix( new THREE.Matrix4().makeScale(.5,.9,.5) );
+			dedo23.applyMatrix( new THREE.Matrix4().makeTranslation(0.4,4.0,0) );
+
+dedo33.applyMatrix( new THREE.Matrix4().makeScale(.5,.9,.5) );
+			dedo33.applyMatrix( new THREE.Matrix4().makeTranslation(-0.3,4.2,0) );
+
+dedo43.applyMatrix( new THREE.Matrix4().makeScale(.5,.9,.5) );
+			dedo43.applyMatrix( new THREE.Matrix4().makeTranslation(-1.1,4.0,0) );
+
+
+
+///////////////////////// Cubos
+
+
 			leftFoot.applyMatrix( new THREE.Matrix4().getInverse( leftLeg.matrix ) );
 			leftFoot.applyMatrix( new THREE.Matrix4().makeScale(.5,.5,1) );
 			leftFoot.applyMatrix( new THREE.Matrix4().makeTranslation(-.5,-.75,0) );
-			
-			hips.add(torso);
-			hips.add(leftLeg);
-			hips.add(dedo2);
-			hips.add(rightLeg);
+
+
+	head.applyMatrix( new THREE.Matrix4().getInverse( head.matrix ) );
+			head.applyMatrix( new THREE.Matrix4().makeScale(0.7,2,1) );
+			head.applyMatrix( new THREE.Matrix4().makeTranslation(0,-1.75,0) );
+
+
+///////////////////////////
+
+//// Esferas inter 1
+
+leftleginter1.applyMatrix( new THREE.Matrix4().makeScale(.5,.7,.5) );
+			leftleginter1.applyMatrix( new THREE.Matrix4().makeTranslation(1.1,1.6,0) );
+
+
+dedo1inter1.applyMatrix( new THREE.Matrix4().makeScale(.5,.7,.5) );
+			dedo1inter1.applyMatrix( new THREE.Matrix4().makeTranslation(0.4,1.6,0) );
+
+
+dedo2inter1.applyMatrix( new THREE.Matrix4().makeScale(.5,.7,.5) );
+				dedo2inter1.applyMatrix( new THREE.Matrix4().makeTranslation(-0.3,1.6,0) );
+
+
+dedo3inter1.applyMatrix( new THREE.Matrix4().makeScale(.5,.7,.5) );
+				dedo3inter1.applyMatrix( new THREE.Matrix4().makeTranslation(-1.1,1.6,0) );
+
+
+///////// Inter 2
+
+leftleginter2.applyMatrix( new THREE.Matrix4().makeScale(.5,.7,.5) );
+			leftleginter2.applyMatrix( new THREE.Matrix4().makeTranslation(1.1,2.4,0) );
+
+
+dedo1inter2.applyMatrix( new THREE.Matrix4().makeScale(.5,.7,.5) );
+			dedo1inter2.applyMatrix( new THREE.Matrix4().makeTranslation(0.4,2.6,0) );
+
+
+dedo2inter2.applyMatrix( new THREE.Matrix4().makeScale(.5,.7,.5) );
+				dedo2inter2.applyMatrix( new THREE.Matrix4().makeTranslation(-0.3,2.8,0) );
+
+
+dedo3inter2.applyMatrix( new THREE.Matrix4().makeScale(.5,.7,.5) );
+				dedo3inter2.applyMatrix( new THREE.Matrix4().makeTranslation(-1.1,2.6,0) );
+
+///////// Inter 3
+
+leftleginter3.applyMatrix( new THREE.Matrix4().makeScale(.5,.7,.5) );
+			leftleginter3.applyMatrix( new THREE.Matrix4().makeTranslation(1.1,3.1,0) );
+
+
+dedo1inter3.applyMatrix( new THREE.Matrix4().makeScale(.5,.7,.5) );
+			dedo1inter3.applyMatrix( new THREE.Matrix4().makeTranslation(0.4,3.5,0) );
+
+
+dedo2inter3.applyMatrix( new THREE.Matrix4().makeScale(.5,.7,.5) );
+				dedo2inter3.applyMatrix( new THREE.Matrix4().makeTranslation(-0.3,3.7,0) );
+
+
+dedo3inter3.applyMatrix( new THREE.Matrix4().makeScale(.5,.7,.5) );
+				dedo3inter3.applyMatrix( new THREE.Matrix4().makeTranslation(-1.1,3.5,0) );
+
+
+//////////////
+
+
+
+			hips.add(head);
+		     hips.add(torso);
+
+		     hips.add(leftLeg);
+		     hips.add(dedo2);
+                hips.add(dedo3);
+                hips.add(dedo4);
+
+	          hips.add(leftLeg2);
+		     hips.add(dedo22);
+                hips.add(dedo32);
+                hips.add(dedo42);
+
+                hips.add(leftLeg3);
+		     hips.add(dedo23);
+                hips.add(dedo33);
+                hips.add(dedo43);
+
+
+
+                hips.add(dedo5);
+                hips.add(dedo52);
+
+
 		
+
+hips.add(leftleginter1);
+hips.add(dedo1inter1);
+hips.add(dedo2inter1);
+hips.add(dedo3inter1);	
+
+hips.add(leftleginter2);
+hips.add(dedo1inter2);
+hips.add(dedo2inter2);
+hips.add(dedo3inter2);
+
+hips.add(leftleginter3);
+hips.add(dedo1inter3);
+hips.add(dedo2inter3);
+hips.add(dedo3inter3);
+
+
+hips.add(dedo5inter1);
+hips.add(dedo5inter2);
+
+
+
 		  	//AGREGAR A LA ESCENA
             scene.add( gridHelperXZ );
 		  	scene.add( arrowX );	
 		  	scene.add( arrowY );	
 		  	scene.add( arrowZ );	
 			scene.add( hips );
-			//scene.add( leftLeg );
+//scene.add( head );
+
 			
 			//MOVER LA CAMARA
 			camera.position.x = 10;
@@ -229,14 +565,20 @@
         var dtime = Date.now()-startTime;
 		var tx=0, ty=0, tz=0;	//Variables para traslacion
 		var sc = 1;				//Variable para escala
-		var theta=0;			//Variable para ángulo de rotacion de piernas
-		var sigma=0;			//Variable para ángulo de rotación de caderas
+		var theta=0;			
+
+//Variable para Ã¡ngulo de rotacion de piernas
+		var sigma=0;		
+
+	//Variable para Ã¡ngulo de rotaciÃ³n de caderas
 		
 		if(thetaSum>=60*Math.PI/180)
 			positivo = false;
 		if(thetaSum<=-60*Math.PI/180)
 			positivo = true;
 		
+
+
 		if(upArrow) {
 			tx=0; ty=0; tz=.1;
 			if(positivo)
@@ -251,6 +593,9 @@
 			else
 				theta = -.1;
 		}
+
+             
+
 		thetaSum+=theta;
 		
 		if(rightArrow)
@@ -258,14 +603,18 @@
 		if(leftArrow)
 			sigma = .1;
 		
-		//MATRIZ DE TRASLACIÓN
+
+
+
+
+		//MATRIZ DE TRASLACIÃ“N
 		var t = new THREE.Matrix4();
 		t.set( 	1, 0, 0, tx,
 				0, 1, 0, ty, 
 				0, 0, 1, tz,
 				0, 0, 0, 1	);
 		
-		hips.matrix.multiply(t); 	//APLICAR LA TRASLACIÓN A NIVEL LOCAL
+		hips.matrix.multiply(t); 	//APLICAR LA TRASLACIÃ“N A NIVEL LOCAL
 		
 		//ROTACIONES
 		var ct1 = Math.cos(theta);
@@ -275,15 +624,16 @@
 		var st2 = Math.sin(-theta);
 		var ss = Math.sin(sigma);
 		var r = new THREE.Matrix4();
+	     var rstop = new THREE.Matrix4();
 		var r1 = new THREE.Matrix4();
 		var r2 = new THREE.Matrix4();
 
-		//MATRIZ DE ROTACIÓN EN EJE Y
+		//MATRIZ DE ROTACIÃ“N EN EJE Y
 		r.set( 	   cs,  0, ss, 0,
 					0,  1,  0, 0, 
 				  -ss,  0, cs, 0,
 					0,  0,  0, 1 );	
-		//MATRICES DE ROTACIÓN EN EJE LOCAL DE PIERNAS	
+		//MATRICES DE ROTACIÃ“N EN EJE LOCAL DE PIERNAS	
 		r1.set( 	1,  0,  0, 0,
 					0, ct1,-st1, 0, 
 					0, st1, ct1, 0,
@@ -291,7 +641,10 @@
 		r2.set( 	1,  0,  0, 0,
 					0, ct2,-st2, 0, 
 					0, st2, ct2, 0,
-					0,  0,  0, 1 );							
+					0,  0,  0, 1 );							rstop.set(  1,  0,  0, 0,
+					0, 1,0, 0, 
+					0, 0, 1, 0,
+					0,  0,  0, 1 );			
 		
 		//ROTACION EN UN EJE PARALELO
 		var tempMatrix = new THREE.Matrix4();
@@ -300,9 +653,63 @@
 		hips.applyMatrix(r);
 		hips.applyMatrix( tempMatrix );
 
+
+/*
+// Esto hace que los dedos roten
 		leftLeg.applyMatrix(r1);
-		dedo2.applyMatrix(r1);
-				
+	     dedo2.applyMatrix(r1);
+           dedo3.applyMatrix(r1);
+	     dedo4.applyMatrix(r1);
+
+*/
+
+                
+		     leftLeg.applyMatrix(r1);
+		     dedo2.applyMatrix(r1);
+                dedo3.applyMatrix(r1);
+                dedo4.applyMatrix(r1);
+
+                leftLeg2.applyMatrix(r1);
+		     dedo22.applyMatrix(r1);
+                dedo32.applyMatrix(r1);
+                dedo42.applyMatrix(r1);
+
+                leftLeg3.applyMatrix(r1);
+		     dedo23.applyMatrix(r1);
+                dedo33.applyMatrix(r1);
+                dedo43.applyMatrix(r1);
+
+
+                dedo5.applyMatrix(r1);
+                dedo52.applyMatrix(r1);
+
+		
+leftleginter1.applyMatrix(r1);
+dedo1inter1.applyMatrix(r1);
+dedo2inter1.applyMatrix(r1);
+dedo3inter1.applyMatrix(r1);
+
+leftleginter2.applyMatrix(r1);
+dedo1inter2.applyMatrix(r1);
+dedo2inter2.applyMatrix(r1);
+dedo3inter2.applyMatrix(r1);
+
+leftleginter3.applyMatrix(r1);
+dedo1inter3.applyMatrix(r1);
+dedo2inter3.applyMatrix(r1);
+dedo3inter3.applyMatrix(r1);
+
+
+dedo5inter1.applyMatrix(r1);
+dedo5inter2.applyMatrix(r1);
+
+
+
+
+
+
+
+
         camera.lookAt( 0, 0, 0 );
         renderer.render( scene, camera );
     }
