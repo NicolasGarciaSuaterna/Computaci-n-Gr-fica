@@ -1,7 +1,7 @@
  <!DOCTYPE html>
 <html>
   <head>
-    <title>Quiz del tri·ngulo</title>
+    <title>Quiz del tri√°ngulo</title>
     <style>
      html, body { margin: 0; padding: 0; overflow: hidden; }
             #info {
@@ -15,9 +15,9 @@
     </style>
   </head>
   <body>
-<div id="info">Quiz Tri·ngulo<br/>
-            El tri·ngulo azul oscuro fue el hecho a mano.<br/>
-            El azul claro es la correcciÛn hecha en Three.js.<br/>
+<div id="info">Quiz Tri√°ngulo<br/>
+            El tri√°ngulo azul oscuro fue el hecho a mano.<br/>
+            El azul claro es la correcci√≥n hecha en Three.js.<br/>
         </div>
 
     <script src="js/three.min.js"></script>
@@ -72,20 +72,20 @@
             var arrowY = new THREE.ArrowHelper( y, origin, arrowSize, colorG );
             var arrowZ = new THREE.ArrowHelper( z, origin, arrowSize, colorB );
 			
-			//CREAR LAS GEOMETR√çAS            			
+			//CREAR LAS GEOMETR√É¬çAS            			
 var geometry = new THREE.Geometry();
-geometry.vertices.push(new THREE.Vector3( -8.4, 18, -0.3) );
-geometry.vertices.push(new THREE.Vector3( 25.3, -6, -0.3) );
-geometry.vertices.push(new THREE.Vector3( -8.4, -6, -0.3) );
+geometry.vertices.push(new THREE.Vector3( -8.4, 4, -0.3) );
+geometry.vertices.push(new THREE.Vector3( 25.3, 1, -0.3) );
+geometry.vertices.push(new THREE.Vector3( -8.4, 1, -0.3) );
 
-//Esta la hago repetir solo para que funcione el programa, pues esta funciÛn no une la primera y ˙ltima lÌnea.
-geometry.vertices.push(new THREE.Vector3( -8.4, 18, -0.3) );
+//Esta la hago repetir solo para que funcione el programa, pues esta funci√≥n no une la primera y √∫ltima l√≠nea.
+geometry.vertices.push(new THREE.Vector3( -8.4, 4, -0.3) );
 
 var geometry2 = new THREE.Geometry();
 geometry2.vertices.push(xx);
 geometry2.vertices.push(yy);
 geometry2.vertices.push(zz);
-//Esta la hago repetir solo para que funcione el programa, pues esta funciÛn no une la primera y ˙ltima lÌnea.
+//Esta la hago repetir solo para que funcione el programa, pues esta funci√≥n no une la primera y √∫ltima l√≠nea.
 
 			geometry2.vertices.push(xx);
 			//CREAR LOS MATERIALES            
@@ -110,8 +110,8 @@ var line2 = new THREE.Line( geometry2, material2 );
 
 var matrixEs1 = new THREE.Matrix4();
 			matrixEs1.set    (8, 0, 0, 0,
-						 0, 8, 0, 0,
-						 0, 0, 8, 0,
+						 0, 1, 0, 0,
+						 0, 0, 1, 0,
 						 0, 0, 0, 1);						 
 			line2.applyMatrix(matrixEs1);
 
