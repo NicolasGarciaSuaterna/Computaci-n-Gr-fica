@@ -23,7 +23,7 @@
     <script>
 		var scene, aspect, camera, renderer;
 		var geometry1, geometry2,geometry3,geometry4,geometry5;
-		var hips, hips2, torso, head, headaux;
+		var hips, hips2, falanjes, torso, head, headaux;
 		var rightFoot, rightLeg, rightArm, rightHand;
 		var leftFoot, leftLeg, dedo2,dedo3,dedo4,dedo5, leftArm, leftHand;
 
@@ -393,6 +393,9 @@ geometrydedos = new THREE.SphereGeometry( 0.5, .5,10);
 			//CREAR LOS OBJETOS
 			hips = new THREE.Mesh( geometry1, material );
 			hips2 = new THREE.Mesh( geometry1, material );
+			falanjes = new THREE.Mesh( geometry1, material );
+			pulgar = new THREE.Mesh( geometry1, material );
+			
                 head= new THREE.Mesh( geometry1, material );
 
 	//CUBO
@@ -691,10 +694,13 @@ hips.add(dedo5inter2);
                 hips2.add(dedo3);
                 hips2.add(dedo4);
 
-	          hips2.add(leftLeg2);
-		     hips2.add(dedo22);
-                hips2.add(dedo32);
-                hips2.add(dedo42);
+	          falanjes.add(leftLeg2);
+		     falanjes.add(dedo22);
+                falanjes.add(dedo32);
+                falanjes.add(dedo42);
+			hips2.add(falanjes);
+			
+			
 
                 hips2.add(leftLeg3);
 		     hips2.add(dedo23);
@@ -702,9 +708,9 @@ hips.add(dedo5inter2);
                 hips2.add(dedo43);
 
 
-
-                hips2.add(dedo5);
-                hips2.add(dedo52);
+				pulgar.add(dedo5);
+			    pulgar.add(dedo52);
+                hips2.add(pulgar);
 		
 
 hips2.add(leftleginter1);
@@ -723,8 +729,9 @@ hips2.add(dedo2inter3);
 hips2.add(dedo3inter3);
 
 
-hips2.add(dedo5inter1);
-hips2.add(dedo5inter2);
+			pulgar.add(dedo5inter1);
+			pulgar.add(dedo5inter2);
+hips2.add(pulgar);
 
 
 
@@ -837,8 +844,8 @@ hips2.add(dedo5inter2);
 			//regresar 
 		
 			var regresar=new THREE.Matrix4();
-			regresar.set (1, 0, 0, -0.8,
-						   0, 1, 0, -2.4,
+			regresar.set (1, 0, 0, 1.1,
+						   0, 1, 0, 2.7,
 						   0, 0, 1, 0,
 						   0, 0, 0, 1);
 		
@@ -850,7 +857,7 @@ hips2.add(dedo5inter2);
 		var st1 = Math.sin(theta);
 		var r10 = new THREE.Matrix4();
 		r10.set( 	1,  0,  0, 0,
-					0, ct1,-st1, 0, 
+					0, ct1,-st1, -2.7, 
 					0, st1, ct1, 0,
 					0,  0,  0, 1 );	
 		
@@ -1015,8 +1022,10 @@ dedo5inter2.applyMatrix(r1);
 		
 		if(Akey) {
 			tx=0; ty=0; tz=0;
-		     leftLeg2.applyMatrix(r1);
-                leftLeg3.applyMatrix(r1);
+			//leftLeg2.applyMatrix(normaliazar);
+			//leftLeg2.applyMatrix(r10);
+		     //leftLeg2.applyMatrix(regresar);
+                //leftLeg3.applyMatrix(r1);
 leftleginter2.applyMatrix(r1);
 leftleginter3.applyMatrix(r1);
 			
