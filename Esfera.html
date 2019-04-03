@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>Ej: Esfera</title>
@@ -28,9 +28,7 @@
 			this.geometria.computeFaceNormals();
 			var materialFan = new THREE.MeshBasicMaterial( { color: 0x3333DD, side:THREE.DoubleSide } );
 			var fan = new THREE.Mesh( this.geometria, materialFan );
-			var fan2 = new THREE.Mesh( this.geometria, materialFan );
 			scene.add( fan );
-			scene.add( fan2 );
 		  }
 		}
 		
@@ -46,9 +44,7 @@
 			this.geometria.computeFaceNormals();
 			var materialStrip = new THREE.MeshBasicMaterial( { color: 0x3333DD, side:THREE.DoubleSide } );
 			var strip = new THREE.Mesh( this.geometria, materialStrip );
-			var strip2 = new THREE.Mesh( this.geometria, materialStrip );
 			scene.add( strip );
-			scene.add( strip2 );
 		  }
 		}
 		
@@ -103,76 +99,67 @@
 			
 			//CREAR LAS GEOMETRÍAS
             //Punto
-			var punto0 = new THREE.Vector3(0,0.5,0);	
-			var punto01 = new THREE.Vector3(0,-1.5,0);			
+			var punto0 = new THREE.Vector3(0,0.5,0);			
             var geometria = new THREE.Geometry();
 			var geometria2 = new THREE.Geometry();
 			var geometria3 = new THREE.Geometry();
 			var geometria4 = new THREE.Geometry();
+			var geometria5 = new THREE.Geometry();
 			var radio = 1.0;
-			var res = 50.0;
+			var res = 10.0;
 			geometria.vertices.push( punto0 );
-					geometria3.vertices.push( punto01 );
             for( var i = 0; i <= res; i++){
                 var punto = new THREE.Vector3();
 				var punto2 = new THREE.Vector3();
 				var punto3 = new THREE.Vector3();
 				var punto4 = new THREE.Vector3();
-				
-				punto.x = radio * Math.sin( ( 5 * Math.PI * i )/ res );
-                punto.y = 0
-                punto.z = radio * Math.cos( ( 5 * Math.PI * i )/ res );
-							
-				punto2.x = punto.x;
+				var punto5 = new THREE.Vector3();
+				punto.x = radio * Math.cos( ( 2 * Math.PI * i )/ res );
+                punto.y = 0;
+                punto.z = radio * Math.sin( ( 2 * Math.PI * i )/ res );
+				punto2.x = 1.2*punto.x;
 				punto2.y = -0.5;
-				punto2.z = punto.z;
-				
-				
-			    punto4.x = (radio * Math.sin( ( 5 * Math.PI * i )/ res ));
-                punto4.y = -1
-                punto4.z = (radio * Math.cos( ( 5 * Math.PI * i )/ res ));
-
-
-
-		
+				punto2.z = 1.2*punto.z;
+				punto3.x = 1*radio * Math.cos( ( 2 * Math.PI * i )/ res );
+				punto3.y = -1;
+				punto3.z = 1*radio * Math.sin( ( 2 * Math.PI * i )/ res );
+				punto4.x = 0;
+				punto4.y = -1.5;
+				punto4.z = 0;
+				punto5.x = radio * Math.cos( ( 2 * Math.PI * i )/ res );
+				punto5.y = -1.5;
+				punto5.z = radio * Math.sin( ( 2 * Math.PI * i )/ res );
 				geometria.vertices.push( punto );
-				geometria3.vertices.push( punto4 );	
-
-
+				geometria2.vertices.push( punto );
 				geometria2.vertices.push( punto2 );
-				geometria2.vertices.push( punto );	
-				
-				
-			     	geometria4.vertices.push( punto4 );
-				geometria4.vertices.push( punto2 );
+				geometria3.vertices.push( punto2 );
+				geometria3.vertices.push( punto3 );
+				geometria4.vertices.push( punto3 );
+				geometria4.vertices.push( punto4 );
+				//geometria5.vertices.push( punto5 );
 				
             }
 			
-			/////////
-			
-						////////
-			
 			fan = new TRIANGLE_FAN(geometria);	
 			fan.draw();
-			fan = new TRIANGLE_FAN(geometria3);	
-			fan.draw();
-		
+			
 			strip = new TRIANGLE_STRIP(geometria2);
 			strip.draw();
+			
+			strip = new TRIANGLE_STRIP(geometria3);
+			strip.draw();
+			
 			strip = new TRIANGLE_STRIP(geometria4);
 			strip.draw();
 			
-
-					
 			//CREAR LOS MATERIALES
             var matLinea = new THREE.LineBasicMaterial( { color: 0xFFFFFF } );
 			
 			//CREAR LOS OBJETOS
 			var cono = new THREE.Line( geometria, matLinea );
 			var tubo = new THREE.Line( geometria2, matLinea );
-			var medio= new THREE.Line( geometria3, matLinea );
-var medio2 = new THREE.Line (geometria4,matLinea);
-
+			var tubo2 = new THREE.Line( geometria3, matLinea );
+			var tubo3 = new THREE.Line( geometria4, matLinea );
 		  	//AGREGAR A LA ESCENA
 		  	//scene.add( gridHelperXY );
             scene.add( gridHelperXZ );
@@ -181,9 +168,8 @@ var medio2 = new THREE.Line (geometria4,matLinea);
 		  	scene.add( arrowZ );	
 			scene.add( cono );
 			scene.add( tubo );
-			scene.add( medio );
-                scene.add( medio2 );
-
+			scene.add( tubo2 );
+			scene.add( tubo3 );
 			
 			camera.position.x = 3;
 			camera.position.y = 4;	 
