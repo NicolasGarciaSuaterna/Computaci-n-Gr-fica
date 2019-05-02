@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Operaciones CSG</title>
+    <style>
+      html, body { margin: 0; padding: 0; overflow: hidden; }
+    </style>
+  </head>
+  <body>
+    <script src="js/three.js"></script>
+	<script src="js/controls/OrbitControls.js"></script>
+	<script src="js/csg.js"></script>
+	<script src="js/THREE.CSG.js"></script>
+    <script>
+		var scene, aspect, camera, renderer, controls;
+		init();
+		animate();
+		function init(){
+			//INICIALIZACIÓN
+	        scene = new THREE.Scene();
+	        aspect = window.innerWidth / window.innerHeight;
+	        camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000);
+	        renderer = new THREE.WebGLRenderer();
+	        renderer.setSize( window.innerWidth, window.innerHeight );
+	        document.body.appendChild( renderer.domElement );
+			controls = new THREE.OrbitControls( camera, renderer.domElement );
+			
+			//ELEMENTOS COMUNES
+			var size = 10;
+			var arrowSize = 1;
+			var divisions = size;
+			var origin = new THREE.Vector3( 0, 0, 0 );
+			var x = new THREE.Vector3( 1, 0, 0 );
+			var y = new THREE.Vector3( 0, 1, 0 );
+		  	var z = new THREE.Vector3( 0, 0, 1 );
+		  	var color = new THREE.Color( 0x333333 );
+		  	var colorR = new THREE.Color( 0xAA3333 );
+		  	var colorG = new THREE.Color( 0x33AA33 );
+		  	var colorB = new THREE.Color( 0x333366 );
+			
+		  	//CREAR LAS GRILLAS PARA EL ESCENARIO
+		  	var axesHelper = new THREE.AxesHelper( size );
+			scene.add( axesHelper );
+			
+		  	var gridHelperXZ = new THREE.GridHelper( size, divisions, color, color );
+			scene.add( gridHelperXZ );
+            
+            //ROTARLAS PARA QUE QUEDEN EN EL ESPACIO ADECUADO
+            gridHelperXZ.rotateOnWorldAxis ( y, THREE.Math.degToRad(90) );
+
+            //CREAR ILUMINACIÓN
+            var ambient = new THREE.AmbientLight( 0xffffff, 2 );
+            scene.add( ambient );
+			
+            var pointLight = new THREE.PointLight( 0xffffff, 1, 100 );
+            pointLight.position.set( -5, -2, 5 );
+            scene.add( pointLight );
+			
+            var pointLight = new THREE.PointLight( 0xffffff, .5, 100 );
+            pointLight.position.set( 5, -2, -5 );
+            scene.add( pointLight );
+			
+			//CREAR LAS GEOMETRÍAS
+			/*
+			var boxGeometry = new THREE.BoxGeometry( 4, 2 , 4 );
+			var sphereGeometry = new THREE.SphereGeometry( 2, 32, 32 );
+			var torusgeometry = new THREE.TorusGeometry( 2, 0.5, 18, 100 );
+			*/
+			
+			var cajafrentegeom  = new THREE.BoxGeometry( 0.35, 1.66 , 3.32);
+			var circgeom = new THREE.CylinderGeometry( 0.83, 0.83, 0.35, 32 );
+			
+			
+			var cilingrandegeom = new THREE.CylinderGeometry( 0.68, 0.68, 5, 32 );	
+			var cilinpeqgeom = new THREE.CylinderGeometry( 0.415, 0.415, 5, 32 );	
+		
+		
+					
+			//CREAR LOS MATERIALES
+            var material1 = new THREE.MeshStandardMaterial( { color: colorR, metalness: 0.5, roughness: 0.1 } );
+			var material2 = new THREE.MeshStandardMaterial( { color: colorG, metalness: 0.5, roughness: 0.1, transparent:true, opacity: 0.5  } );
+			var material3 = new THREE.MeshStandardMaterial( { color: colorB, metalness: 0.5, roughness: 0.1 } );
+			
+			
+			//CREAR LAS MALLAS  
+			
+			var cajafrente  = new THREE.Mesh( cajafrentegeom,material1);
+			var circulo1 = new THREE.Mesh( circgeom,material1);
+			var circulo2 = new THREE.Mesh( circgeom,material1);
+			var cilingrande = new THREE.Mesh( cilingrandegeom,material1);
+			var cilinpeq = new THREE.Mesh( cilinpeqgeom,material2);
+			var cilinpeq2 = new THREE.Mesh( cilinpeqgeom,material2);
+			
+			circulo1.rotateZ(Math.PI/2);
+			circulo1.translateZ(-1.66);
+			
+			circulo2.rotateZ(Math.PI/2);
+			circulo2.translateZ(1.66);
+			
+			
+			cilingrande.translateY(0.83);
+			cilingrande.translateX(0.5);
+			cilingrande.rotateX(Math.PI/2);
+			
+			cilinpeq.translateY(0.83);
+			cilinpeq.translateX(0.5);
+			cilinpeq.rotateX(Math.PI/2);
+			
+			
+			cilinpeq2.translateY(0.41);
+			cilinpeq2.translateX(0.5);
+			cilinpeq2.rotateX(Math.PI/2);
+			//cilinpeq2.translateY(0.41);
+			
+			//cilingrande.translateX(1);
+			
+			
+			/*
+			cajacorte.translateX(-2.7);
+			cajacorte.translateY(7.7);
+			cajacorte.rotateZ(Math.PI/6.2);
+			//cajacorte.rotateY(Math.PI/4);
+	        
+			*/
+			//CONVERTIR A CSG
+			/*
+			var boxCSG = THREE.CSG.fromMesh( cube );
+			var sphereCSG = THREE.CSG.fromMesh( sphere );
+			var torusCSG = THREE.CSG.fromMesh( torus );
+			var torus2CSG = THREE.CSG.fromMesh( torus2 );
+			*/
+			var cajafrenteCSG= THREE.CSG.fromMesh( cajafrente );
+			var circulo1CSG= THREE.CSG.fromMesh( circulo1);
+			var circulo2CSG= THREE.CSG.fromMesh( circulo2 );
+			var cilingrandeCSG= THREE.CSG.fromMesh( cilingrande );
+			var cilinpeqCSG= THREE.CSG.fromMesh( cilinpeq );
+			var cilinpeq2CSG= THREE.CSG.fromMesh( cilinpeq2 );
+			
+				
+			//var cajafrenteCSG = THREE.CSG.fromMesh( cajafrente );
+		    
+			//APLICAR LAS OPERACIONES
+			/*
+			var result1 = boxCSG.subtract( sphereCSG );	//CAJA MENOS ESFERA
+			var result2= boxCSG.intersect( sphereCSG );	//INTERSECCIÓN - CAJA Y ESFERA
+			var result3 = boxCSG.union( sphereCSG );	//UNIÓN - CAJA Y ESFERA
+			var result4 = sphereCSG.subtract( boxCSG );	//ESFERA MENOS CAJA
+		
+			var result5 = torus2CSG.union( torusCSG );
+			var result6 = sphereCSG.subtract( boxCSG );
+			
+			*/
+			
+			var r1 = cajafrenteCSG.union( circulo1CSG);
+			var auxr1= THREE.CSG.toMesh( r1);
+			var auxr1CSG= THREE.CSG.fromMesh( auxr1 );
+			
+			var r2 = auxr1CSG.union( circulo2CSG);
+			
+			var pared1 = THREE.CSG.toMesh( r2);
+			pared1.material = material1; 
+			
+			var pared2= THREE.CSG.toMesh( r2);
+			pared2.translateX(1);
+			pared2.material = material1; 
+			
+			var r3 =cilingrandeCSG.subtract( cilinpeqCSG );	
+			var arriba = THREE.CSG.toMesh( r3);
+			arriba.material = material1; 
+			
+			
+			
+			var aux2CSG = THREE.CSG.fromMesh( arriba);
+			var r4 =aux2CSG.subtract( cilinpeq2CSG );
+			var result = THREE.CSG.toMesh( r4);
+			result.material = material1;
+			
+			
+			
+					
+			//CONVERTIR A MALLA DE THREE JS NUEVAMENTE
+			
+			/*
+			var cajaconhueco = THREE.CSG.toMesh( r1);
+			var cajacircular = THREE.CSG.toMesh( r2);
+			var diagonal = THREE.CSG.toMesh( r4);
+			*/
+			
+			/*
+			cajaconhueco.material = material1;
+			cajacircular.material = material3;
+			*/
+			
+			
+			
+			
+			
+			
+			///////
+			
+			/*
+			var anillosjuntosCSG = THREE.CSG.fromMesh( anillosjuntos );
+			var esferamochaCSG = THREE.CSG.fromMesh( esferamocha );
+			var result7 = esferamochaCSG.subtract( anillosjuntosCSG );
+			
+			var figfinal = THREE.CSG.toMesh( result7);
+			
+			figfinal.material = material1;
+			figfinal.translateZ(7);
+			figfinal.translateX(9);
+			figfinal.rotateZ(Math.PI/2);
+			figfinal.rotateY(Math.PI/2);
+			*/
+			
+			
+			
+			
+			
+			
+			//AGREGAR A LA ESCENA LOS DIFERENTES ELEMENTOS
+			
+					/*
+				scene.add(cajafrente);
+			scene.add(circulo1);
+			scene.add(circulo2);
+			*/
+			scene.add(pared1);
+			scene.add(pared2);
+			scene.add(result);
+			
+			
+				////////////
+				
+
+
+			camera.position.x = -3;
+			camera.position.y = 10;
+		  	camera.position.z = 11;
+			camera.lookAt( origin );
+		}
+		function animate(){
+			requestAnimationFrame( animate );
+			controls.update();
+			render();
+		}
+		function render(){
+			renderer.render( scene, camera );
+		}
+    </script>
+  </body>
+</html>
