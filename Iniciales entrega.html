@@ -1,0 +1,523 @@
+ <!DOCTYPE html>
+<html>
+  <head>
+    <title>Iniciales</title>
+    <style>
+      html, body { margin: 0; padding: 0; overflow: hidden; }
+    </style>
+  </head>
+  <body>
+    <script src="js/three.min.js"></script>
+    <script src="js/controls/OrbitControls.js"></script>
+    <script>
+		var scene, aspect, camera, renderer, controls;
+		var startTime = Date.now();
+		init();
+		animate();
+	
+		function init(){
+			//INICIALIZACIÓN DE LA ESCENA
+			scene = new THREE.Scene();
+            scene.background = new THREE.Color( 0xAAAAAA );
+			aspect = window.innerWidth / window.innerHeight;
+			camera = new THREE.PerspectiveCamera( 45, aspect, 0.1, 1000);
+			renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+            controls = new THREE.OrbitControls( camera, renderer.domElement );
+			
+			//ELEMENTOS DE ESCENA
+			var size = 10;
+			var arrowSize = 1;
+			var divisions = size;
+			var origin = new THREE.Vector3( 0, 0, 0 );
+			var x = new THREE.Vector3( 1, 0, 0 );
+			var y = new THREE.Vector3( 0, 1, 0 );
+		  	var z = new THREE.Vector3( 0, 0, 1 );
+			var color1 = new THREE.Color( 0xFFFFFF );
+		  	var color2 = new THREE.Color( 0x333333 );
+		  	var colorR = new THREE.Color( 0xAA3333 );
+		  	var colorG = new THREE.Color( 0x33AA33 );
+		  	var colorB = new THREE.Color( 0x333366 );
+			var colorRd = new THREE.Color( 0xAA6666 );
+		  	var colorGd = new THREE.Color( 0x66AA66 );
+		  	var colorBd = new THREE.Color( 0x6666AA );
+		  
+		  	//CREAR LAS GRILLAS PARA EL ESCENARIO
+		  	var axesHelper = new THREE.AxesHelper( size );
+		  	var gridHelperXY = new THREE.GridHelper( size, divisions, color1, color1);
+		  	var gridHelperXZ = new THREE.GridHelper( size, divisions, color2, color2 );
+		  	var gridHelperYZ = new THREE.GridHelper( size, divisions, color2, color2 );
+            
+            //ROTARLAS PARA QUE QUEDEN EN EL ESPACIO ADECUADO
+            gridHelperXY.rotateOnWorldAxis ( x, THREE.Math.degToRad(90) );
+            gridHelperXZ.rotateOnWorldAxis ( y, THREE.Math.degToRad(90) );
+            gridHelperYZ.rotateOnWorldAxis ( z, THREE.Math.degToRad(90) );
+            
+            //CREAR LAS FLECHAS QUE INDICAN LOS EJES DE COORDENADAS 3D
+            var arrowX = new THREE.ArrowHelper( x, origin, arrowSize, colorR );
+            var arrowY = new THREE.ArrowHelper( y, origin, arrowSize, colorG );
+            var arrowZ = new THREE.ArrowHelper( z, origin, arrowSize, colorB );
+          
+		  ////////// Declarar las curvas
+		  
+		  ///////////////// S
+			    var curvessup = new THREE.CubicBezierCurve3(
+                new THREE.Vector3( -2, 0, 0 ),
+                new THREE.Vector3( 0, 12, 0 ),
+                new THREE.Vector3( 9, 9, 0 ),
+                new THREE.Vector3( 16, 4, 0 )
+            );
+			
+			var curvessup2 = new THREE.CubicBezierCurve3(
+                new THREE.Vector3( -2, 0, -5 ),
+                new THREE.Vector3( 0, 12, -5 ),
+                new THREE.Vector3( 9, 9, -5 ),
+                new THREE.Vector3( 16, 4, -5 )
+            );
+			
+            
+          ///////////// S mid
+			  var curvesmid = new THREE.CubicBezierCurve3(
+                new THREE.Vector3( -2, 0, 0 ),
+                new THREE.Vector3( -2, -12, 0 ),
+                new THREE.Vector3( 9, -9, 0 ),
+                new THREE.Vector3( 12, -9, 0 )
+            );
+			
+			  
+			 var curvesmid2 = new THREE.CubicBezierCurve3(
+                new THREE.Vector3( -2, 0, -5 ),
+                new THREE.Vector3( -2, -12, -5 ),
+                new THREE.Vector3( 9, -9, -5),
+                new THREE.Vector3( 12, -9, -5 )
+            );
+			
+			//////////// S mid in
+			var curvesmidin = new THREE.CubicBezierCurve3(
+                new THREE.Vector3( 11, -9, 0 ),
+                new THREE.Vector3( 20, -12, 0 ),
+                new THREE.Vector3( 14, -26, 0 ),
+                new THREE.Vector3( -4, -22, 0 )
+            );
+			
+			  
+			 var curvesmidin2 = new THREE.CubicBezierCurve3(
+                new THREE.Vector3( 11, -9, -5 ),
+                new THREE.Vector3( 20, -12, -5 ),
+                new THREE.Vector3( 14, -26, -5),
+                new THREE.Vector3( -4, -22, -5 )
+            );
+			
+			
+			////////////G
+			            
+						  var curvegsup = new THREE.CubicBezierCurve3(
+                new THREE.Vector3( -22, 8, 0 ),
+                new THREE.Vector3( -22, 13, 0 ),
+                new THREE.Vector3( -39, 6, 0 ),
+                new THREE.Vector3( -40, -3, 0 )
+            );
+			
+			var curvegsup2 = new THREE.CubicBezierCurve3(
+                new THREE.Vector3( -22, 8, -5 ),
+                new THREE.Vector3( -22, 13, -5 ),
+                new THREE.Vector3( -39, 6, -5 ),
+                new THREE.Vector3( -40, -3, -5 )
+            );
+			
+			///////// G mid
+			
+			var curvegmid = new THREE.CubicBezierCurve3(
+                new THREE.Vector3( -40, -1.5, 0 ),
+                new THREE.Vector3( -41, -11, 0 ),
+                new THREE.Vector3( -40, -28, 0 ),
+                new THREE.Vector3( -21, -14, 0 )
+            );
+			
+			  
+			 var curvegmid2 = new THREE.CubicBezierCurve3(
+                new THREE.Vector3( -40, -1.5, -5 ),
+               new THREE.Vector3( -41, -11, -5 ),
+                new THREE.Vector3( -40, -28, -5 ),
+                new THREE.Vector3( -21, -14, -5 )
+            );
+			
+			//////////// G mid in (Esta está al contrario)
+			var curvegmidin = new THREE.CubicBezierCurve3(
+                new THREE.Vector3( -34, -8, 0 ),
+                new THREE.Vector3( -23, 0, 0 ),
+                new THREE.Vector3( -14, -6, 0 ),
+                new THREE.Vector3( -25.5, -17.5, 0 )
+            );
+			
+			  
+			 var curvegmidin2 = new THREE.CubicBezierCurve3(
+                new THREE.Vector3( -34, -8, -5 ),
+                new THREE.Vector3( -23, 0, -5 ),
+                new THREE.Vector3( -14, -6, -5),
+                new THREE.Vector3( -25.5, -17.5, -5 )
+            );
+			
+			///////N 1
+			
+			var curven1 = new THREE.QuadraticBezierCurve3(
+	new THREE.Vector3( -84, -17.5, 0 ),
+	new THREE.Vector3( -86, 0, 0 ),
+	new THREE.Vector3( -82, 12, 0 )
+);
+
+var curven12 = new THREE.QuadraticBezierCurve3(
+	new THREE.Vector3( -84, -17.5, -5 ),
+	new THREE.Vector3( -86, 0, -5 ),
+	new THREE.Vector3( -82,12, -5 )
+);
+
+	///////N 2
+			
+			var curven2 = new THREE.QuadraticBezierCurve3(
+	new THREE.Vector3( -82.5,10.8, 0 ),
+	new THREE.Vector3( -70, 0, 0 ),
+	new THREE.Vector3( -56, -17.5, 0 )
+);
+
+var curven22 = new THREE.QuadraticBezierCurve3(
+	new THREE.Vector3( -82.5,10.8, -5 ),
+	new THREE.Vector3( -70, 0, -5 ),
+	new THREE.Vector3( -56, -17.5, -5 )
+);
+			
+				///////N 3
+			
+			var curven3 = new THREE.QuadraticBezierCurve3(
+	new THREE.Vector3( -57.5, -16, 0 ),
+	new THREE.Vector3( -53, 0, 0 ),
+	new THREE.Vector3( -54, 12, 0 )
+);
+
+var curven32 = new THREE.QuadraticBezierCurve3(
+	new THREE.Vector3( -57.5, -16, -5 ),
+	new THREE.Vector3( -53, 0, -5 ),
+	new THREE.Vector3( -54,12, -5 )
+);
+						
+////////////////////////
+/////////////Geometrias de las curvas/puntos de la curva.	
+
+/////S sup					
+            var pointGeometryssup = new THREE.Geometry();
+            for(var i=0; i<20; i++){
+                var point = curvessup.getPoint( i/20 );
+                pointGeometryssup.vertices.push( point );
+            }
+						
+            for(var i=0; i<20; i++){
+                var point = curvessup2.getPoint( i/20 );
+                pointGeometryssup.vertices.push( point );
+            }
+			
+/////////S mid
+			var pointGeometrysmid = new THREE.Geometry();
+			
+				for(var i=0; i<20; i++){
+                var point = curvesmid.getPoint( i/20 );
+                pointGeometrysmid.vertices.push( point );
+            }
+           
+			
+			  for(var i=0; i<20; i++){
+                var point = curvesmid2.getPoint( i/20 );
+                pointGeometrysmid.vertices.push( point );
+            }
+			
+///////// S mid in			
+
+var pointGeometrysmidin = new THREE.Geometry();
+			
+				for(var i=0; i<20; i++){
+                var point = curvesmidin.getPoint( i/20 );
+                pointGeometrysmidin.vertices.push( point );
+            }
+           
+			
+			  for(var i=0; i<20; i++){
+                var point = curvesmidin2.getPoint( i/20 );
+                pointGeometrysmidin.vertices.push( point );
+            }
+			
+			/////G sup					
+            var pointGeometrygsup = new THREE.Geometry();
+            for(var i=0; i<20; i++){
+                var point = curvegsup.getPoint( i/20 );
+                pointGeometrygsup.vertices.push( point );
+            }
+						
+            for(var i=0; i<20; i++){
+                var point = curvegsup2.getPoint( i/20 );
+                pointGeometrygsup.vertices.push( point );
+            }
+			
+			
+			//// G mid
+			
+			var pointGeometrygmid = new THREE.Geometry();
+			
+				for(var i=0; i<20; i++){
+                var point = curvegmid.getPoint( i/20 );
+                pointGeometrygmid.vertices.push( point );
+            }
+           
+			
+			  for(var i=0; i<20; i++){
+                var point = curvegmid2.getPoint( i/20 );
+                pointGeometrygmid.vertices.push( point );
+            }
+			
+			///////// G mid in			
+
+var pointGeometrygmidin = new THREE.Geometry();
+			
+				for(var i=0; i<20; i++){
+                var point = curvegmidin.getPoint( i/20 );
+                pointGeometrygmidin.vertices.push( point );
+            }
+           
+			
+			  for(var i=0; i<20; i++){
+                var point = curvegmidin2.getPoint( i/20 );
+                pointGeometrygmidin.vertices.push( point );
+            }
+			
+			//////////// N 1
+			
+			var pointGeometryn1 = new THREE.Geometry();
+			
+				for(var i=0; i<20; i++){
+                var point = curven1.getPoint( i/20 );
+                pointGeometryn1.vertices.push( point );
+            }
+           
+			
+			  for(var i=0; i<20; i++){
+                var point = curven12.getPoint( i/20 );
+                pointGeometryn1.vertices.push( point );
+            }
+			
+			//////////// N 2
+			
+			var pointGeometryn2 = new THREE.Geometry();
+			
+				for(var i=0; i<20; i++){
+                var point = curven2.getPoint( i/20 );
+                pointGeometryn2.vertices.push( point );
+            }
+           
+			
+			  for(var i=0; i<20; i++){
+                var point = curven22.getPoint( i/20 );
+                pointGeometryn2.vertices.push( point );
+            }
+			
+			//////////// N 3
+			
+			var pointGeometryn3 = new THREE.Geometry();
+			
+				for(var i=0; i<20; i++){
+                var point = curven3.getPoint( i/20 );
+                pointGeometryn3.vertices.push( point );
+            }
+           
+			
+			  for(var i=0; i<20; i++){
+                var point = curven32.getPoint( i/20 );
+                pointGeometryn3.vertices.push( point );
+            }
+			
+			
+			
+///////////////////////////////////////////Poner el camino negro
+			
+			////////S sup
+			 var material = new THREE.MeshStandardMaterial( { color : 0x00cc00 } );
+            material.side = THREE.DoubleSide;
+            for(var i=0; i<19; i++){
+                var face1 = new THREE.Face3( i, i+1, i+20 );
+                 pointGeometryssup.faces.push( face1 );
+                var face2 = new THREE.Face3( i+1, i+20, i+21 );
+                 pointGeometryssup.faces.push( face2 );
+				       }
+					   
+					   ///////////S mid
+					     for(var i=0; i<19; i++){
+                var face1 = new THREE.Face3( i, i+1, i+20 );
+                pointGeometrysmid.faces.push( face1 );
+                var face2 = new THREE.Face3( i+1, i+20, i+21 );
+                pointGeometrysmid.faces.push( face2 );
+            }
+			
+			//////////S mid in
+			
+			     for(var i=0; i<19; i++){
+                var face1 = new THREE.Face3( i, i+1, i+20 );
+                pointGeometrysmidin.faces.push( face1 );
+                var face2 = new THREE.Face3( i+1, i+20, i+21 );
+                pointGeometrysmidin.faces.push( face2 );
+            }
+			
+			////////// G sup
+			for(var i=0; i<19; i++){
+                var face1 = new THREE.Face3( i, i+1, i+20 );
+                 pointGeometrygsup.faces.push( face1 );
+                var face2 = new THREE.Face3( i+1, i+20, i+21 );
+                 pointGeometrygsup.faces.push( face2 );
+				       }
+			
+			 ///////////G mid
+					     for(var i=0; i<19; i++){
+                var face1 = new THREE.Face3( i, i+1, i+20 );
+                pointGeometrygmid.faces.push( face1 );
+                var face2 = new THREE.Face3( i+1, i+20, i+21 );
+                pointGeometrygmid.faces.push( face2 );
+            }
+			
+				//////////G mid in
+			
+			     for(var i=0; i<19; i++){
+                var face1 = new THREE.Face3( i, i+1, i+20 );
+                pointGeometrygmidin.faces.push( face1 );
+                var face2 = new THREE.Face3( i+1, i+20, i+21 );
+                pointGeometrygmidin.faces.push( face2 );
+            }
+			
+			//////////N 1
+			
+			     for(var i=0; i<19; i++){
+                var face1 = new THREE.Face3( i, i+1, i+20 );
+                pointGeometryn1.faces.push( face1 );
+                var face2 = new THREE.Face3( i+1, i+20, i+21 );
+                pointGeometryn1.faces.push( face2 );
+            }
+			
+			//////////N 2
+			
+			     for(var i=0; i<19; i++){
+                var face1 = new THREE.Face3( i, i+1, i+20 );
+                pointGeometryn2.faces.push( face1 );
+                var face2 = new THREE.Face3( i+1, i+20, i+21 );
+                pointGeometryn2.faces.push( face2 );
+            }
+			
+			//////////N 3
+			
+			     for(var i=0; i<19; i++){
+                var face1 = new THREE.Face3( i, i+1, i+20 );
+                pointGeometryn3.faces.push( face1 );
+                var face2 = new THREE.Face3( i+1, i+20, i+21 );
+                pointGeometryn3.faces.push( face2 );
+            }
+			
+			/////////////////// 
+			  
+				
+				
+				
+				
+	        var pointMaterial = new THREE.PointsMaterial( { color: 0x00FF00 } );
+            var curvePointsssup = new THREE.Points( pointGeometryssup, pointMaterial );
+			///S
+              var curvePointssmid = new THREE.Points( pointGeometrysmid, pointMaterial );
+           var curvePointssmidin = new THREE.Points( pointGeometrysmidin, pointMaterial );
+		   var curvePointsgsup = new THREE.Points( pointGeometrygsup, pointMaterial );
+		   ///G
+		    var curvePointsgmid = new THREE.Points( pointGeometrygmid, pointMaterial );
+			var curvePointsgmidin = new THREE.Points( pointGeometrygmidin, pointMaterial );
+			
+			// N
+			
+		var curvePointsn1 = new THREE.Points( pointGeometryn1, pointMaterial );
+		var curvePointsn2 = new THREE.Points( pointGeometryn2, pointMaterial );
+		var curvePointsn3 = new THREE.Points( pointGeometryn3, pointMaterial );
+				   
+		   
+		   //// S
+            pointGeometryssup.computeFaceNormals();
+			 pointGeometrysmid.computeFaceNormals();
+			  pointGeometrysmidin.computeFaceNormals();
+			  
+			  //// G
+			  pointGeometrygsup.computeFaceNormals();
+			   pointGeometrygmid.computeFaceNormals();
+			    pointGeometrygmidin.computeFaceNormals();
+				
+				//// N
+				pointGeometryn1.computeFaceNormals();
+				pointGeometryn2.computeFaceNormals();
+				pointGeometryn3.computeFaceNormals();
+				
+				
+            //pointGeometry.computeVertexNormals();
+			
+			
+			//////////////Agregar a la escena
+			
+            /// S
+            scene.add( new THREE.Mesh( pointGeometryssup, material ) );
+			scene.add( new THREE.Mesh( pointGeometrysmid, material ) );
+            scene.add( new THREE.Mesh( pointGeometrysmidin, material ) );
+			/// G
+			scene.add( new THREE.Mesh( pointGeometrygsup, material ) );
+			scene.add( new THREE.Mesh( pointGeometrygmid, material ) );
+			scene.add( new THREE.Mesh( pointGeometrygmidin, material ) );
+			/// N
+			scene.add( new THREE.Mesh( pointGeometryn1, material ) );
+			scene.add( new THREE.Mesh( pointGeometryn2, material ) );
+			scene.add( new THREE.Mesh( pointGeometryn3, material ) );
+			
+		  	//AGREGAR A LA ESCENA
+            scene.add( gridHelperXZ );
+		  	scene.add( arrowX );	
+		  	scene.add( arrowY );	
+		  	scene.add( arrowZ );
+			
+			/// S
+            scene.add( curvePointsssup );
+			scene.add( curvePointssmid );
+			scene.add( curvePointssmidin );
+
+            ///G
+			scene.add( curvePointsgsup );
+			scene.add( curvePointsgmid );
+			scene.add( curvePointsgmidin );
+			
+			///N
+			scene.add( curvePointsn1);
+			scene.add( curvePointsn2);
+			scene.add( curvePointsn3);
+			
+			
+			
+
+			//MOVER LA CÁMARA
+			camera.position.x = -30;
+			camera.position.y = 0;	 
+		  	camera.position.z = 150;		
+			
+		
+				
+		  	//camera.lookAt( origin );
+				
+			}
+    
+    function animate() {
+        requestAnimationFrame( animate );
+        controls.update();
+		camera.lookAt(new THREE.Vector3( -30 , 0, 0 ));
+        render();
+    }
+    
+    function render(){
+        renderer.render( scene, camera );
+		    }
+    </script>
+  </body>
+</html>
