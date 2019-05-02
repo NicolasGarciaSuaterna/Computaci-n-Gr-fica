@@ -1,8 +1,8 @@
  <!DOCTYPE html>
 <html>
   <head>
-    <title>HMMM!!!! Donas!!!!</title>
-    <style>
+    <title>Ej: Esfera</title>
+   <style>
             html, body { margin: 0; padding: 0; overflow: hidden; }
             #info {
                 position: absolute;
@@ -14,20 +14,13 @@
         </style>
   </head>
   <body>
-  <div id="info">Toroide<br/>
-            Hecho por Nicolas García Suaterna, Brayan Andres Galvis, Andres Felipe Escobar; 
-	  Dentro del código se pueden cambiar ambos radios y el ángulo de rotación.<br/>
+	  <div id="info">Esferas<br/>
+            Hecho por Nicolas García Suaterna, Brayan Andres Galvis, Andres Felipe Escobar.<br/>
             <br/>
         </div>
     <script src="js/three.js"></script>
 	<script src="js/controls/OrbitControls.js"></script>
     <script>
-	
-	
-	
-	
-	
-	
 		var scene, aspect, camera, renderer, controls;
 		var startTime = Date.now();
 		var fan;
@@ -46,9 +39,7 @@
 			this.geometria.computeFaceNormals();
 			var materialFan = new THREE.MeshBasicMaterial( { color: 0x3333DD, side:THREE.DoubleSide } );
 			var fan = new THREE.Mesh( this.geometria, materialFan );
-			var fan2 = new THREE.Mesh( this.geometria, materialFan );
 			scene.add( fan );
-			scene.add( fan2 );
 		  }
 		}
 		
@@ -64,9 +55,7 @@
 			this.geometria.computeFaceNormals();
 			var materialStrip = new THREE.MeshBasicMaterial( { color: 0x3333DD, side:THREE.DoubleSide } );
 			var strip = new THREE.Mesh( this.geometria, materialStrip );
-			var strip2 = new THREE.Mesh( this.geometria, materialStrip );
 			scene.add( strip );
-			scene.add( strip2 );
 		  }
 		}
 		
@@ -121,126 +110,77 @@
 			
 			//CREAR LAS GEOMETRÍAS
             //Punto
-			var punto0 = new THREE.Vector3(0,0.5,0);	
-			var punto01 = new THREE.Vector3(0,-1.5,0);	
-					
-			var geomaux = new THREE.Geometry();
-            var pisogeom = new THREE.Geometry();
-			var externogeom = new THREE.Geometry();
-			var techogeom = new THREE.Geometry();
-			var internogeom = new THREE.Geometry();
-			
-			var radio = 5.0;
-			var radiointerno = 3.0;
-			
-			//Angulo de rotación
-			var angrotacion=90;
-				
-			
-			
-			
-			
-			var res = 50.0;
-		        for( var i = 0; i <= res; i++){
+			var punto0 = new THREE.Vector3(0,0.5,0);			
+            var geometria = new THREE.Geometry();
+			var geometria2 = new THREE.Geometry();
+			var geometria3 = new THREE.Geometry();
+			var geometria4 = new THREE.Geometry();
+			var geometria5 = new THREE.Geometry();
+			var radio = 1.0;
+			var res = 10.0;
+			geometria.vertices.push( punto0 );
+            for( var i = 0; i <= res; i++){
                 var punto = new THREE.Vector3();
 				var punto2 = new THREE.Vector3();
 				var punto3 = new THREE.Vector3();
 				var punto4 = new THREE.Vector3();
-				
-				punto.x = radio * Math.sin( ( 5 * Math.PI * i )/ res );
-                punto.y = 0
-                punto.z = radio * Math.cos( ( 5 * Math.PI * i )/ res );
-							
-				punto2.x = punto.x;
+				var punto5 = new THREE.Vector3();
+				punto.x = radio * Math.cos( ( 2 * Math.PI * i )/ res );
+                punto.y = 0;
+                punto.z = radio * Math.sin( ( 2 * Math.PI * i )/ res );
+				punto2.x = 1.2*punto.x;
 				punto2.y = -0.5;
-				punto2.z = punto.z;
+				punto2.z = 1.2*punto.z;
+				punto3.x = 1*radio * Math.cos( ( 2 * Math.PI * i )/ res );
+				punto3.y = -1;
+				punto3.z = 1*radio * Math.sin( ( 2 * Math.PI * i )/ res );
+				punto4.x = 0;
+				punto4.y = -1.5;
+				punto4.z = 0;
+				punto5.x = radio * Math.cos( ( 2 * Math.PI * i )/ res );
+				punto5.y = -1.5;
+				punto5.z = radio * Math.sin( ( 2 * Math.PI * i )/ res );
+				geometria.vertices.push( punto );
+				geometria2.vertices.push( punto );
+				geometria2.vertices.push( punto2 );
+				geometria3.vertices.push( punto2 );
+				geometria3.vertices.push( punto3 );
+				geometria4.vertices.push( punto3 );
+				geometria4.vertices.push( punto4 );
+				//geometria5.vertices.push( punto5 );
 				
-				punto3.x = (radiointerno) * Math.sin( ( 5 * Math.PI * i )/ res );
-                punto3.y = 0
-                punto3.z = (radiointerno) * Math.cos( ( 5 * Math.PI * i )/ res );
-
-
-				punto4.x = punto3.x;
-				punto4.y = -0.5;
-				punto4.z = punto3.z;
-				
-				
-				
-				externogeom.vertices.push( punto2 );
-				externogeom.vertices.push( punto );	
-							
-				internogeom.vertices.push( punto4 );
-				internogeom.vertices.push( punto3 );
-				
-				techogeom.vertices.push( punto );
-				techogeom.vertices.push( punto3 );
-				
-				pisogeom.vertices.push( punto2 );
-				pisogeom.vertices.push( punto4 );
-				
-					
             }
-		
-			/*
+			
 			fan = new TRIANGLE_FAN(geometria);	
 			fan.draw();
-			fan = new TRIANGLE_FAN(geometria3);	
-			fan.draw();
-		*/
-		/////Rotaciones
 			
-		
-	var cs = Math.cos(angrotacion);
-		var ss = Math.sin(angrotacion);
-		
-		var r= new THREE.Matrix4();
-		           r.set( 1,  0,  0,   0,
-						 0, cs,  -ss, 0,
-						 0, ss,  cs,  0,
-						 0,  0,  0,   1);
-			
-        pisogeom.applyMatrix(r);
-		 techogeom.applyMatrix(r);
-		  internogeom.applyMatrix(r);
-		   externogeom.applyMatrix(r);
-		
-            ////// 
-		
-			strip = new TRIANGLE_STRIP(externogeom);
-			strip.draw();
-			strip = new TRIANGLE_STRIP(internogeom);
-			strip.draw();
-			strip = new TRIANGLE_STRIP(techogeom);
-			strip.draw();
-			strip = new TRIANGLE_STRIP(pisogeom);
+			strip = new TRIANGLE_STRIP(geometria2);
 			strip.draw();
 			
-		
+			strip = new TRIANGLE_STRIP(geometria3);
+			strip.draw();
+			
+			strip = new TRIANGLE_STRIP(geometria4);
+			strip.draw();
+			
 			//CREAR LOS MATERIALES
             var matLinea = new THREE.LineBasicMaterial( { color: 0xFFFFFF } );
 			
 			//CREAR LOS OBJETOS
-	
-			var externo = new THREE.Line( externogeom, matLinea );
-		    var interno = new THREE.Line (internogeom,matLinea);
-			var techo = new THREE.Line (techogeom,matLinea);
-			var piso = new THREE.Line (pisogeom,matLinea);
-			
-	var dona = new THREE.Line( geomaux, matLinea );
-			
-			dona.add( externo );
-		    dona.add( interno );
-			dona.add( techo );
-			dona.add( piso );
-
+			var cono = new THREE.Line( geometria, matLinea );
+			var tubo = new THREE.Line( geometria2, matLinea );
+			var tubo2 = new THREE.Line( geometria3, matLinea );
+			var tubo3 = new THREE.Line( geometria4, matLinea );
 		  	//AGREGAR A LA ESCENA
 		  	//scene.add( gridHelperXY );
             scene.add( gridHelperXZ );
 		  	scene.add( arrowX );	
 		  	scene.add( arrowY );	
 		  	scene.add( arrowZ );	
-	
-			scene.add( dona );
+			scene.add( cono );
+			scene.add( tubo );
+			scene.add( tubo2 );
+			scene.add( tubo3 );
 			
 			camera.position.x = 3;
 			camera.position.y = 4;	 
